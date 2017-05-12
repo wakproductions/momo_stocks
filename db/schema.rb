@@ -10,16 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510010552) do
+ActiveRecord::Schema.define(version: 20170512170038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "create_report_snapshots", force: :cascade do |t|
+  create_table "report_line_items", force: :cascade do |t|
+    t.integer "report_snapshot_id"
+    t.string "symbol"
+    t.float "last_trade"
+    t.float "change_percent"
+    t.float "volume"
+    t.float "average_volume"
+    t.float "volume_ratio"
+    t.float "short_days_to_cover"
+    t.float "short_percent_of_float"
+    t.float "float"
+    t.float "float_percent_traded"
+    t.float "institutional_ownership_percent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "report_snapshots", force: :cascade do |t|
     t.datetime "built_at"
     t.integer "report_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "short_interest_as_of"
+    t.date "institutional_ownership_as_of"
   end
 
 end
