@@ -1,0 +1,1 @@
+[Use `setInterval` to auto time refresh of page](https://facebook.github.io/react/docs/rendering-elements.html)

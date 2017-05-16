@@ -8,4 +8,14 @@ class ReportSnapshot < ActiveRecord::Base
     report_type_active_stocks:  4,
   }
 
+  validates :built_at, presence: true
+
+  after_validation :set_report_date
+
+  private
+
+  def set_report_date
+    self.report_date = self.built_at.to_date
+  end
+
 end

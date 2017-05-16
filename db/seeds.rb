@@ -1,5 +1,135 @@
 ## Populate a Report Snapshot Line Item So We can Work on the Aesthetics
 
+module Seeds
+  extend self
+
+  def import_report_line_items_from_hash(report_snapshot_id, report)
+    report.map do |line|
+
+      line.symbolize_keys!
+
+      ReportLineItem.create(
+        report_snapshot_id: report_snapshot_id,
+        symbol: line[:ticker_symbol],
+        last_trade: line[:last_trade],
+        change_percent: line[:pct_change],
+        volume: line[:volume],
+        average_volume: line[:average_volume],
+        volume_ratio: line[:volume_ratio],
+        short_days_to_cover: line[:short_ratio],
+        short_percent_of_float: line[:short_pct_float],
+        float: line[:float],
+        float_percent_traded: line[:float],
+        institutional_ownership_percent: line[:institutional_ownership_percent],
+      )
+    end
+  end
+end
+
+
+# qry = ActiveRecord::Base.connection.execute($stf.select_premarket_by_volume(Date.new(2017,5,5)))
+# report = []; qry.each {|line| report << line }
+# Clipboard.copy(report.map(&:inspect).join(",\n"))
+
+rs = ReportSnapshot.create(
+  report_type: :report_type_premarket,
+  built_at: Time.new(2017,5,5,9,15,12),
+  short_interest_as_of: Date.new(2017,4,30),
+  institutional_ownership_as_of: Date.new(2017,5,5)
+)
+
+report = [
+  {"ticker_symbol"=>"VWR", "last_trade"=>"33.08", "pct_change"=>"-2.84875183553598", "previous_close"=>"34.05", "volume"=>"6890.82", "average_volume"=>"0.0496", "volume_ratio"=>"138927.822580645", "short_ratio"=>"9.63", "short_pct_float"=>"8.19235871892747", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:38.226142", "float"=>"85928", "institutional_ownership_percent"=>"107.81"},
+  {"ticker_symbol"=>"BCOV", "last_trade"=>"5.6", "pct_change"=>"-35.632183908046", "previous_close"=>"8.7", "volume"=>"332.34", "average_volume"=>"0.0198", "volume_ratio"=>"16784.8484848485", "short_ratio"=>"1.71", "short_pct_float"=>"1.16487822522305", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:02.913895", "float"=>"33176", "institutional_ownership_percent"=>"78.95"},
+  {"ticker_symbol"=>"USEG", "last_trade"=>"1.01", "pct_change"=>"3.06122448979591", "previous_close"=>"0.98", "volume"=>"0.5", "average_volume"=>"0.0002", "volume_ratio"=>"2500", "short_ratio"=>"11.06", "short_pct_float"=>"13.7780294450736", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:40.77496", "float"=>"5298", "institutional_ownership_percent"=>"18.96"},
+  {"ticker_symbol"=>"MNTX", "last_trade"=>"7.1", "pct_change"=>"-3.00546448087432", "previous_close"=>"7.32", "volume"=>"3.05", "average_volume"=>"0.002", "volume_ratio"=>"1525", "short_ratio"=>"6.08", "short_pct_float"=>"4.2936015407661", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:27.097736", "float"=>"14019", "institutional_ownership_percent"=>"60.91"},
+  {"ticker_symbol"=>"MB", "last_trade"=>"25.4", "pct_change"=>"-10.8771929824561", "previous_close"=>"28.5", "volume"=>"54.04", "average_volume"=>"0.1024", "volume_ratio"=>"527.734375", "short_ratio"=>"10.72", "short_pct_float"=>"15.171923960727", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:26.015691", "float"=>"19148", "institutional_ownership_percent"=>"78.7"},
+  {"ticker_symbol"=>"CDNA", "last_trade"=>"1.25", "pct_change"=>"5.93220338983051", "previous_close"=>"1.18", "volume"=>"5.12", "average_volume"=>"0.0124", "volume_ratio"=>"412.903225806452", "short_ratio"=>"6.71", "short_pct_float"=>"2.46262710258626", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:16.695357", "float"=>"15041", "institutional_ownership_percent"=>"35.77"},
+  {"ticker_symbol"=>"REGI", "last_trade"=>"11.6", "pct_change"=>"14.2857142857143", "previous_close"=>"10.15", "volume"=>"13.01", "average_volume"=>"0.0324", "volume_ratio"=>"401.543209876543", "short_ratio"=>"34.29", "short_pct_float"=>"31.7377946003489", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:50.089348", "float"=>"33817", "institutional_ownership_percent"=>"98.49"},
+  {"ticker_symbol"=>"MFA", "last_trade"=>"7.81", "pct_change"=>"-4.52322738386308", "previous_close"=>"8.18", "volume"=>"1037.43", "average_volume"=>"2.8054", "volume_ratio"=>"369.797533328581", "short_ratio"=>"3.58", "short_pct_float"=>"1.71441094348607", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:07.508517", "float"=>"369608", "institutional_ownership_percent"=>"83.53"},
+  {"ticker_symbol"=>"INFN", "last_trade"=>"9.75", "pct_change"=>"-2.01005025125628", "previous_close"=>"9.95", "volume"=>"101.97", "average_volume"=>"0.422", "volume_ratio"=>"241.635071090047", "short_ratio"=>"8.6", "short_pct_float"=>"14.7765501032591", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:51.142747", "float"=>"143813", "institutional_ownership_percent"=>"78.81"},
+  {"ticker_symbol"=>"AMSC", "last_trade"=>"4.18", "pct_change"=>"-13.8144329896907", "previous_close"=>"4.85", "volume"=>"39.8", "average_volume"=>"0.1732", "volume_ratio"=>"229.792147806005", "short_ratio"=>"25.08", "short_pct_float"=>"21.841726618705", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:51.315483", "float"=>"10564", "institutional_ownership_percent"=>"30.06"},
+  {"ticker_symbol"=>"ZFGN", "last_trade"=>"5.25", "pct_change"=>"7.80287474332648", "previous_close"=>"4.87", "volume"=>"80.51", "average_volume"=>"0.352", "volume_ratio"=>"228.721590909091", "short_ratio"=>"3.62", "short_pct_float"=>"2.80468468468468", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:07.378992", "float"=>"22200", "institutional_ownership_percent"=>"50.57"},
+  {"ticker_symbol"=>"SHAK", "last_trade"=>"34.4", "pct_change"=>"3.8647342995169", "previous_close"=>"33.12", "volume"=>"266.38", "average_volume"=>"1.1872", "volume_ratio"=>"224.376684636119", "short_ratio"=>"9.05", "short_pct_float"=>"32.9955657743472", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:17.8963", "float"=>"18267", "institutional_ownership_percent"=>"97.14"},
+  {"ticker_symbol"=>"IMMU", "last_trade"=>"6.34", "pct_change"=>"17.1903881700554", "previous_close"=>"5.41", "volume"=>"1077.4", "average_volume"=>"6.473", "volume_ratio"=>"166.445234049127", "short_ratio"=>"6.03", "short_pct_float"=>"28.5627676105937", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:27.577813", "float"=>"89449", "institutional_ownership_percent"=>"58.42"},
+  {"ticker_symbol"=>"PSDV", "last_trade"=>"1.76", "pct_change"=>"4.76190476190477", "previous_close"=>"1.68", "volume"=>"8.61", "average_volume"=>"0.082", "volume_ratio"=>"105", "short_ratio"=>"1.9", "short_pct_float"=>"1.57162726008345", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:58.45793", "float"=>"27322", "institutional_ownership_percent"=>"25.68"},
+  {"ticker_symbol"=>"OLED", "last_trade"=>"103.95", "pct_change"=>"15.6928213689483", "previous_close"=>"89.85", "volume"=>"73.1", "average_volume"=>"0.7284", "volume_ratio"=>"100.356946732565", "short_ratio"=>"6.73", "short_pct_float"=>"12.2622470073554", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:34.468672", "float"=>"41602", "institutional_ownership_percent"=>"68.09"},
+  {"ticker_symbol"=>"APHB", "last_trade"=>"1.25", "pct_change"=>"-56.8965517241379", "previous_close"=>"2.9", "volume"=>"824.24", "average_volume"=>"8.2828", "volume_ratio"=>"99.5122422369247", "short_ratio"=>"4.81", "short_pct_float"=>"106.181167534722", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:04.975343", "float"=>"1224", "institutional_ownership_percent"=>"14.14"},
+  {"ticker_symbol"=>"NCMI", "last_trade"=>"9.98", "pct_change"=>"-14.8464163822526", "previous_close"=>"11.72", "volume"=>"6.6", "average_volume"=>"0.0702", "volume_ratio"=>"94.017094017094", "short_ratio"=>"3.42", "short_pct_float"=>"3.35294117647059", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:07.392982", "float"=>"50898", "institutional_ownership_percent"=>"92.95"},
+  {"ticker_symbol"=>"MCHX", "last_trade"=>"2.6", "pct_change"=>"-4.41176470588236", "previous_close"=>"2.72", "volume"=>"9.3", "average_volume"=>"0.099", "volume_ratio"=>"93.939393939394", "short_ratio"=>"3.06", "short_pct_float"=>"4.03690450528131", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:46.053425", "float"=>"23195", "institutional_ownership_percent"=>"58.23"},
+  {"ticker_symbol"=>"FLR", "last_trade"=>"48.76", "pct_change"=>"-3.63636363636364", "previous_close"=>"50.6", "volume"=>"40.98", "average_volume"=>"0.4512", "volume_ratio"=>"90.8244680851064", "short_ratio"=>"2.87", "short_pct_float"=>"2.44199979861041", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:38.544987", "float"=>"139034", "institutional_ownership_percent"=>"84.08"},
+  {"ticker_symbol"=>"CBMX", "last_trade"=>"5.45", "pct_change"=>"12.3711340206186", "previous_close"=>"4.85", "volume"=>"8.1", "average_volume"=>"0.1056", "volume_ratio"=>"76.7045454545455", "short_ratio"=>"1.52", "short_pct_float"=>"9.75401069518717", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:32.243407", "float"=>"2431", "institutional_ownership_percent"=>"12.05"},
+  {"ticker_symbol"=>"DAIO", "last_trade"=>"5.47", "pct_change"=>"14.6750524109015", "previous_close"=>"4.77", "volume"=>"27.19", "average_volume"=>"0.3744", "volume_ratio"=>"72.6228632478633", "short_ratio"=>"0.22", "short_pct_float"=>"0.133757081663673", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:40.591422", "float"=>"7237", "institutional_ownership_percent"=>"22.22"},
+  {"ticker_symbol"=>"MELI", "last_trade"=>"256.44", "pct_change"=>"8.42670500190268", "previous_close"=>"236.51", "volume"=>"8.42", "average_volume"=>"0.119", "volume_ratio"=>"70.7563025210084", "short_ratio"=>"4.79", "short_pct_float"=>"4.18036363636364", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:12.511195", "float"=>"44000", "institutional_ownership_percent"=>"91.62"},
+  {"ticker_symbol"=>"EVC", "last_trade"=>"5.6", "pct_change"=>"-3.44827586206897", "previous_close"=>"5.8", "volume"=>"2.1", "average_volume"=>"0.0332", "volume_ratio"=>"63.2530120481928", "short_ratio"=>"1.22", "short_pct_float"=>"0.979146378320293", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:29.88547", "float"=>"59558", "institutional_ownership_percent"=>"81.58"},
+  {"ticker_symbol"=>"HDP", "last_trade"=>"11", "pct_change"=>"8.91089108910892", "previous_close"=>"10.1", "volume"=>"26.55", "average_volume"=>"0.4242", "volume_ratio"=>"62.5884016973126", "short_ratio"=>"9.83", "short_pct_float"=>"22.3960508828555", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:09.591676", "float"=>"26335", "institutional_ownership_percent"=>"51.45"},
+  {"ticker_symbol"=>"HLF", "last_trade"=>"65.61", "pct_change"=>"5.48231511254018", "previous_close"=>"62.2", "volume"=>"63.6", "average_volume"=>"1.0234", "volume_ratio"=>"62.1457885479773", "short_ratio"=>"17.33", "short_pct_float"=>"36.9033807182352", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:18.042771", "float"=>"52267", "institutional_ownership_percent"=>"106.4"},
+  {"ticker_symbol"=>"NVIV", "last_trade"=>"2.95", "pct_change"=>"-13.2352941176471", "previous_close"=>"3.4", "volume"=>"36.83", "average_volume"=>"0.7104", "volume_ratio"=>"51.8440315315315", "short_ratio"=>"14.02", "short_pct_float"=>"8.38616367779061", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:50.517749", "float"=>"30265", "institutional_ownership_percent"=>"23.62"},
+  {"ticker_symbol"=>"MLP", "last_trade"=>"14.5", "pct_change"=>"4.31654676258992", "previous_close"=>"13.9", "volume"=>"0.01", "average_volume"=>"0.0002", "volume_ratio"=>"50", "short_ratio"=>"0.78", "short_pct_float"=>"0.225914634146341", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:11.591501", "float"=>"6560", "institutional_ownership_percent"=>"19.69"},
+  {"ticker_symbol"=>"SENS", "last_trade"=>"1.75", "pct_change"=>"8.02469135802468", "previous_close"=>"1.62", "volume"=>"6.4", "average_volume"=>"0.1508", "volume_ratio"=>"42.4403183023873", "short_ratio"=>"13.3", "short_pct_float"=>"7.45932985196475", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:04.84438", "float"=>"33787", "institutional_ownership_percent"=>"38.42"},
+  {"ticker_symbol"=>"ALDR", "last_trade"=>"20.7", "pct_change"=>"-5.04587155963303", "previous_close"=>"21.8", "volume"=>"4.51", "average_volume"=>"0.1122", "volume_ratio"=>"40.1960784313725", "short_ratio"=>"15.29", "short_pct_float"=>"22.6559593813952", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:25.914583", "float"=>"38603", "institutional_ownership_percent"=>"7.8"},
+  {"ticker_symbol"=>"SWIR", "last_trade"=>"28.5", "pct_change"=>"14.9193548387097", "previous_close"=>"24.8", "volume"=>"22.13", "average_volume"=>"0.6", "volume_ratio"=>"36.8833333333333", "short_ratio"=>"0.84", "short_pct_float"=>"1.62877120290043", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:15.198645", "float"=>"30892", "institutional_ownership_percent"=>"23.23"},
+  {"ticker_symbol"=>"IBM", "last_trade"=>"153.45", "pct_change"=>"-3.52090537566804", "previous_close"=>"159.05", "volume"=>"649.41", "average_volume"=>"17.8986", "volume_ratio"=>"36.2827260232644", "short_ratio"=>"6.18", "short_pct_float"=>"2.34984825617064", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:17.933233", "float"=>"857366", "institutional_ownership_percent"=>"60.33"},
+  {"ticker_symbol"=>"SNCR", "last_trade"=>"18.61", "pct_change"=>"20.453074433657", "previous_close"=>"15.45", "volume"=>"275.56", "average_volume"=>"8.2664", "volume_ratio"=>"33.33494628859", "short_ratio"=>"5.19", "short_pct_float"=>"11.396826995719", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:01.356401", "float"=>"39710", "institutional_ownership_percent"=>"82.74"},
+  {"ticker_symbol"=>"ECR", "last_trade"=>"1.99", "pct_change"=>"13.0681818181818", "previous_close"=>"1.76", "volume"=>"2.9", "average_volume"=>"0.1042", "volume_ratio"=>"27.831094049904", "short_ratio"=>"12.91", "short_pct_float"=>"18.2", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:16.929674", "float"=>"85741", "institutional_ownership_percent"=>"93.57"},
+  {"ticker_symbol"=>"XBIO", "last_trade"=>"4.58", "pct_change"=>"2.46085011185684", "previous_close"=>"4.47", "volume"=>"4.4", "average_volume"=>"0.168", "volume_ratio"=>"26.1904761904762", "short_ratio"=>"1.15", "short_pct_float"=>"0.919120935212392", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:05.019809", "float"=>"1868", "institutional_ownership_percent"=>"3.85"},
+  {"ticker_symbol"=>"CHUY", "last_trade"=>"27.55", "pct_change"=>"-11.2721417069243", "previous_close"=>"31.05", "volume"=>"4.9", "average_volume"=>"0.1942", "volume_ratio"=>"25.2317198764161", "short_ratio"=>"10.68", "short_pct_float"=>"9.56825938566553", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:40.985118", "float"=>"16408", "institutional_ownership_percent"=>"96.67"},
+  {"ticker_symbol"=>"NCTY", "last_trade"=>"1.19", "pct_change"=>"11.214953271028", "previous_close"=>"1.07", "volume"=>"0.5", "average_volume"=>"0.0202", "volume_ratio"=>"24.7524752475248", "short_ratio"=>"0.52", "short_pct_float"=>"0.0472475844340041", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:58.383922", "float"=>"45124", "institutional_ownership_percent"=>"0.96"},
+  {"ticker_symbol"=>"OCUL", "last_trade"=>"8.57", "pct_change"=>"-5.82417582417581", "previous_close"=>"9.1", "volume"=>"24.51", "average_volume"=>"0.9904", "volume_ratio"=>"24.7475767366721", "short_ratio"=>"5.24", "short_pct_float"=>"23.8171418591451", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:37.081195", "float"=>"22903", "institutional_ownership_percent"=>"63.35"},
+  {"ticker_symbol"=>"OHGI", "last_trade"=>"2.12", "pct_change"=>"-3.19634703196346", "previous_close"=>"2.19", "volume"=>"5.37", "average_volume"=>"0.2284", "volume_ratio"=>"23.5113835376532", "short_ratio"=>"0.89", "short_pct_float"=>"4.6283267054145", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:14.008857", "float"=>"3269", "institutional_ownership_percent"=>"0.76"},
+  {"ticker_symbol"=>"DS", "last_trade"=>"3.84", "pct_change"=>"-4.4776119402985", "previous_close"=>"4.02", "volume"=>"1", "average_volume"=>"0.0526", "volume_ratio"=>"19.0114068441065", "short_ratio"=>"0.82", "short_pct_float"=>"0.779556431429277", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:35.588664", "float"=>"58069", "institutional_ownership_percent"=>"40.65"},
+  {"ticker_symbol"=>"BOCH", "last_trade"=>"10.5", "pct_change"=>"-4.97737556561086", "previous_close"=>"11.05", "volume"=>"0.5", "average_volume"=>"0.0284", "volume_ratio"=>"17.6056338028169", "short_ratio"=>"0.83", "short_pct_float"=>"0.178157465441745", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:40.712469", "float"=>"11647", "institutional_ownership_percent"=>"36.13"},
+  {"ticker_symbol"=>"TELL", "last_trade"=>"8.44", "pct_change"=>"-4.84780157835399", "previous_close"=>"8.87", "volume"=>"10.6", "average_volume"=>"0.6296", "volume_ratio"=>"16.8360864040661", "short_ratio"=>"0.95", "short_pct_float"=>"1.67548385191214", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:01.320187", "float"=>"55402", "institutional_ownership_percent"=>"0.59"},
+  {"ticker_symbol"=>"INTT", "last_trade"=>"7.6", "pct_change"=>"5.55555555555556", "previous_close"=>"7.2", "volume"=>"2.26", "average_volume"=>"0.1348", "volume_ratio"=>"16.7655786350148", "short_ratio"=>"0.3", "short_pct_float"=>"0.33194000491763", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:27.033875", "float"=>"4067", "institutional_ownership_percent"=>"37.33"},
+  {"ticker_symbol"=>"ROCK", "last_trade"=>"35", "pct_change"=>"-10.2564102564103", "previous_close"=>"39", "volume"=>"5.22", "average_volume"=>"0.3146", "volume_ratio"=>"16.5924984106802", "short_ratio"=>"5.31", "short_pct_float"=>"3.41906936911219", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:03.24701", "float"=>"31527", "institutional_ownership_percent"=>"101.02"},
+  {"ticker_symbol"=>"AKAO", "last_trade"=>"26", "pct_change"=>"4.04161664665867", "previous_close"=>"24.99", "volume"=>"21.1", "average_volume"=>"1.348", "volume_ratio"=>"15.6528189910979", "short_ratio"=>"3.96", "short_pct_float"=>"21.2146553075838", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:09:50.111621", "float"=>"19133", "institutional_ownership_percent"=>"75.86"},
+  {"ticker_symbol"=>"AAOI", "last_trade"=>"51.38", "pct_change"=>"9.76287118137151", "previous_close"=>"46.81", "volume"=>"170.34", "average_volume"=>"12.2052", "volume_ratio"=>"13.9563464752728", "short_ratio"=>"1.93", "short_pct_float"=>"20.6707875185736", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:11.448832", "float"=>"16825", "institutional_ownership_percent"=>"67.86"},
+  {"ticker_symbol"=>"MTGE", "last_trade"=>"18.1", "pct_change"=>"2.54957507082154", "previous_close"=>"17.65", "volume"=>"7.71", "average_volume"=>"0.6102", "volume_ratio"=>"12.6352015732547", "short_ratio"=>"1.89", "short_pct_float"=>"1.49844305558623", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:21.897427", "float"=>"45281", "institutional_ownership_percent"=>"74.04"},
+  {"ticker_symbol"=>"YRCW", "last_trade"=>"9.8", "pct_change"=>"-8.32553788587463", "previous_close"=>"10.69", "volume"=>"0.5", "average_volume"=>"0.0402", "volume_ratio"=>"12.4378109452736", "short_ratio"=>"3.83", "short_pct_float"=>"9.02474995761994", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:15.167716", "float"=>"29495", "institutional_ownership_percent"=>"91.92"},
+  {"ticker_symbol"=>"WING", "last_trade"=>"32.89", "pct_change"=>"13.4137931034483", "previous_close"=>"29", "volume"=>"30.37", "average_volume"=>"2.4568", "volume_ratio"=>"12.3616085965484", "short_ratio"=>"10.39", "short_pct_float"=>"18.1037052587383", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:25.990039", "float"=>"28581", "institutional_ownership_percent"=>"122.81"},
+  {"ticker_symbol"=>"ELY", "last_trade"=>"13.29", "pct_change"=>"9.65346534653466", "previous_close"=>"12.12", "volume"=>"11.74", "average_volume"=>"1.0076", "volume_ratio"=>"11.6514489876935", "short_ratio"=>"1.67", "short_pct_float"=>"1.9008364232129", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:11:11.152503", "float"=>"92776", "institutional_ownership_percent"=>"90.76"},
+  {"ticker_symbol"=>"STO", "last_trade"=>"16.76", "pct_change"=>"2.57037943696452", "previous_close"=>"16.34", "volume"=>"511.48", "average_volume"=>"44.1086", "volume_ratio"=>"11.5959246042722", "short_ratio"=>"2.95", "short_pct_float"=>"0.542851304011167", "price_date"=>"2017-05-05", "updated_at"=>"2017-05-07 21:10:42.870208", "float"=>"1066747", "institutional_ownership_percent"=>"4.97"}
+]
+
+Seeds.import_report_line_items_from_hash(rs.id, report)
+
+
+rs = ReportSnapshot.create(
+  report_type: :report_type_premarket,
+  built_at: Time.new(2017,5,11,8,5,12),
+  short_interest_as_of: Date.new(2017,4,30),
+  institutional_ownership_as_of: Date.new(2017,5,5)
+)
+
+report = [
+  {"ticker_symbol"=>"DRRX", "last_trade"=>"1.11", "pct_change"=>"38.8", "previous_close"=>"0.8", "volume"=>"452.19", "average_volume"=>"1.20238095238095", "volume_ratio"=>"376.539801980198", "short_ratio"=>"6.89", "short_pct_float"=>"1.56645111551654", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:20.628265", "float"=>"127116", "institutional_ownership_percent"=>"41.2"},
+  {"ticker_symbol"=>"KATE", "last_trade"=>"17.99", "pct_change"=>"6.01", "previous_close"=>"16.97", "volume"=>"12093.23", "average_volume"=>"30.6903225806452", "volume_ratio"=>"390.48552659239", "short_ratio"=>"1.87", "short_pct_float"=>"5.95766423357664", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:17.965796", "float"=>"128095", "institutional_ownership_percent"=>"50.1"},
+]
+
+Seeds.import_report_line_items_from_hash(rs.id, report)
+
+rs = ReportSnapshot.create(
+  report_type: :report_type_premarket,
+  built_at: Time.new(2017,5,11,8,5,12),
+  short_interest_as_of: Date.new(2017,4,30),
+  institutional_ownership_as_of: Date.new(2017,5,5)
+)
+
+report = [
+  {"ticker_symbol"=>"DRRX", "last_trade"=>"1.11", "pct_change"=>"38.8", "previous_close"=>"0.8", "volume"=>"452.19", "average_volume"=>"1.20238095238095", "volume_ratio"=>"376.539801980198", "short_ratio"=>"6.89", "short_pct_float"=>"1.56645111551654", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:20.628265", "float"=>"127116", "institutional_ownership_percent"=>"41.2"},
+  {"ticker_symbol"=>"KATE", "last_trade"=>"17.99", "pct_change"=>"6.01", "previous_close"=>"16.97", "volume"=>"12093.23", "average_volume"=>"30.6903225806452", "volume_ratio"=>"390.48552659239", "short_ratio"=>"1.87", "short_pct_float"=>"5.95766423357664", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:17.965796", "float"=>"128095", "institutional_ownership_percent"=>"50.1"},
+]
+
+Seeds.import_report_line_items_from_hash(rs.id, report)
+
+
+rs = ReportSnapshot.create(
+  report_type: :report_type_premarket,
+  built_at: Time.new(2017,5,11,9,10,52),
+  short_interest_as_of: Date.new(2017,4,30),
+  institutional_ownership_as_of: Date.new(2017,5,5)
+)
+
 report = [
   {"ticker_symbol"=>"DRRX", "last_trade"=>"1.06", "pct_change"=>"32.5", "previous_close"=>"0.8", "volume"=>"824.28", "average_volume"=>"1.20238095238095", "volume_ratio"=>"685.539801980198", "short_ratio"=>"6.89", "short_pct_float"=>"1.56645111551654", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:20.628265", "float"=>"127116", "institutional_ownership_percent"=>"41.2"},
   {"ticker_symbol"=>"KATE", "last_trade"=>"18.39", "pct_change"=>"8.36770771950501", "previous_close"=>"16.97", "volume"=>"19902.23", "average_volume"=>"30.6903225806452", "volume_ratio"=>"648.48552659239", "short_ratio"=>"1.87", "short_pct_float"=>"5.95766423357664", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:17.965796", "float"=>"128095", "institutional_ownership_percent"=>"50.1"},
@@ -53,32 +183,4 @@ report = [
   {"ticker_symbol"=>"GEVO", "last_trade"=>"1.13", "pct_change"=>"9.70873786407767", "previous_close"=>"1.03", "volume"=>"5.36", "average_volume"=>"13.1376666666667", "volume_ratio"=>"0.407987212341106", "short_ratio"=>"1.6", "short_pct_float"=>"34.5384755986109", "price_date"=>"2017-05-08", "updated_at"=>"2017-05-08 12:59:10.035751", "float"=>"5471", "institutional_ownership_percent"=>"13.3"},
 ]
 
-rs = ReportSnapshot.create(
-  report_type: :report_type_premarket,
-  built_at: Time.new(2017,5,11,9,10,52),
-  short_interest_as_of: Date.new(2017,4,30),
-  institutional_ownership_as_of: Date.new(2017,5,5)
-)                         
-
-report.map do |line|
-
-  line.symbolize_keys!
-
-  ReportLineItem.create(
-    report_snapshot_id: rs.id,
-    symbol: line[:ticker_symbol],
-    last_trade: line[:last_trade],
-    change_percent: line[:pct_change],
-    volume: line[:volume],
-    average_volume: line[:average_volume],
-    volume_ratio: line[:volume_ratio],
-    short_days_to_cover: line[:short_ratio],
-    short_percent_of_float: line[:short_pct_float],
-    float: line[:float],
-    float_percent_traded: line[:float],
-    institutional_ownership_percent: line[:institutional_ownership_percent],
-  )
-
-  
-
-end
+Seeds.import_report_line_items_from_hash(rs.id, report)
