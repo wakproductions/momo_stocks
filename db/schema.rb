@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515193804) do
+ActiveRecord::Schema.define(version: 20170516155615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20170515193804) do
     t.float "last_trade"
     t.float "change_percent"
     t.float "volume"
-    t.float "average_volume"
+    t.float "volume_average"
     t.float "volume_ratio"
     t.float "short_days_to_cover"
     t.float "short_percent_of_float"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 20170515193804) do
     t.float "institutional_ownership_percent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "volume_average_premarket"
+    t.float "volume_ratio_premarket"
   end
 
   create_table "report_snapshots", force: :cascade do |t|

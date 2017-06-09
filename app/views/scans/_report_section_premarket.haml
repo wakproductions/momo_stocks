@@ -1,0 +1,31 @@
+%h2= section_title
+
+.report-container
+  %table.table-bordered{ style: "xwidth: 1000px;" }
+    %thead
+      %th#index{ style: "min-width: 25px;"}
+      %th#symbol{ style: "min-width: 70px;"} Symbol
+      %th#last-trade.rjust{ style: "min-width: 75px;"} Last Trade
+      %th#change-percent.rjust{ style: "width: 75px;"} % Chg
+      %th#volume.rjust{ style: "width: 100px;"} Volume (K)
+      %th#volume-average.rjust{ style: "width: 100px;"} Avg Volume (K)
+      %th#volume-ratio.rjust{ style: "width: 100px;"} Volume Ratio
+      %th#short-days-to-cover.rjust{ style: "width: 125px;"} Short Ratio
+      %th#short-percent-of-float.rjust{ style: "width: 125px;"} Short % of Float
+      %th#float.rjust{ style: "width: 100px;"} Float (M)
+      %th#float-percent.rjust{ style: "width: 75px;"} Float % Traded
+      %th#institutional-ownership-percent.rjust{ style: "width: 75px;"} IO %
+    -line_items.each_with_index do |r, i|
+      %tr{ id: r['ticker_symbol'] }
+        %td= i+1
+        %td{ class: set_css_class(r, :symbol) }= "#{r[:symbol]} #{symbol_icon(r[:symbol])}".html_safe
+        %td{ class: set_css_class(r, :last_trade) }= r[:last_trade]
+        %td{ class: set_css_class(r, :change_percent) }= r[:change_percent]
+        %td{ class: set_css_class(r, :volume) }= r[:volume]
+        %td{ class: set_css_class(r, :volume_average) }= r[:volume_average]
+        %td{ class: set_css_class(r, :volume_ratio) }= r[:volume_ratio]
+        %td{ class: set_css_class(r, :short_days_to_cover) }= r[:short_days_to_cover]
+        %td{ class: set_css_class(r, :short_percent_of_float) }= r[:short_percent_of_float]
+        %td{ class: set_css_class(r, :float) }= r[:float]
+        %td{ class: set_css_class(r, :float_percent_traded) }= r[:float_percent_traded]
+        %td{ class: set_css_class(r, :institutional_ownership_percent) }= r[:institutional_ownership_percent]

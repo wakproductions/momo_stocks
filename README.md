@@ -25,6 +25,7 @@ Controller - receive report version id to display that snapshot
 * Get report displays working
 * JSON API to receive snapshots
 * Provision devops AWS
+* Capistrano Deploy
 * Update stock trend finder to increase frequency of the reports and send to momo stocks API
-*  
+* Reset stock ability on STF application  
    

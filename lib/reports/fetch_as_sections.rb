@@ -1,5 +1,5 @@
 module Reports
-  class Fetch
+  class FetchAsSections
     include Verbalize::Action
 
     attr_reader :report_snapshot
@@ -49,24 +49,30 @@ module Reports
         'Gap Ups, By Volume',
         columns,
         report_line_items
-          .select { |r| r[:change_percent].to_f >= 0 && r[:average_volume] > 0 }
-          .sort { |r1, r2| r2[:average_volume] <=> r1[:average_volume]}
+          .select { |r| r[:change_percent].to_f >= 0 && r[:volume_average] > 0 }
+          .sort { |r1, r2| r2[:volume_ratio] <=> r1[:volume_ratio] }
           .first(50)
       )
-      @report << Section.new(
-        'Gaps By Percent (No Average ',
-        columns,
-        report_line_items
-          .select { |r| r[:change_percent].to_f < 0 && r[:average_volume] > 0 }
-          .sort { |r1, r2| r2[:average_volume] <=> r1[:average_volume]}
-          .first(50)
-      )
+
+      gaps_by_percent = report_line_items
+        .select { |r| r[:volume_average].nil? || r[:volume_average] == 0 }
+        .sort { |r1, r2| r2[:volume_ratio] <=> r1[:volume_ratio] }
+        .first(50)
+
+      if gaps_by_percent.size > 0
+        @report << Section.new(
+          'Gaps By Percent (No Recent Premarket History)',
+          columns,
+          gaps_by_percent
+        )
+      end
+
       @report << Section.new(
         'Gap Downs, By Volume',
         columns,
         report_line_items
-          .select { |r| r[:average_volume].nil? || r[:average_volume] == 0 }
-          .sort { |r1, r2| r2[:change_percent] <=> r1[:change_percent]}
+          .select { |r| r[:change_percent].to_f < 0 && r[:volume_average] > 0 }
+          .sort { |r1, r2| r2[:volume_ratio] <=> r1[:volume_ratio] }
           .first(50)
       )
     end
