@@ -4,7 +4,7 @@ module Reports
 
     REPORT_SNAPSHOT_COLUMNS=[:built_at, :report_type, :short_interest_as_of, :institutional_ownership_as_of]
     REPORT_LINE_ITEM_COLUMNS=[
-      :symbol,
+      :ticker_symbol,
       :last_trade,
       :change_percent,
       :volume,

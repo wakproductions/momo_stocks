@@ -1,7 +1,7 @@
 class API::V1::ReportSnapshotsController < ActionController::API
   before_action :validate_api_key, only: [:create]
 
-  # Just a placeholder for now
+  # POST /api/v1/report_snapshot
   def create
     Reports::InsertReportData.(input: report_snapshot_param.deep_symbolize_keys)
     render json: nil, status: :ok

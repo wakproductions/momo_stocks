@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611023914) do
+ActiveRecord::Schema.define(version: 20170611205843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "report_line_items", force: :cascade do |t|
     t.integer "report_snapshot_id"
-    t.string "symbol"
+    t.string "ticker_symbol"
     t.float "last_trade"
     t.float "change_percent"
     t.float "volume"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170611023914) do
     t.datetime "updated_at", null: false
     t.float "volume_average_premarket"
     t.float "volume_ratio_premarket"
-    t.index ["report_snapshot_id", "symbol"], name: "report_line_items_unique", unique: true
+    t.index ["report_snapshot_id", "ticker_symbol"], name: "report_line_items_unique", unique: true
   end
 
   create_table "report_snapshots", force: :cascade do |t|

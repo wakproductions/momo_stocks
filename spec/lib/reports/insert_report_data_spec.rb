@@ -17,7 +17,7 @@ RSpec.describe Reports::InsertReportData do
   end
 
   def find_report_line_item(attr)
-    ReportLineItem.where(report_snapshot_id: attr[:report_snapshot_id], symbol: attr[:symbol])
+    ReportLineItem.where(report_snapshot_id: attr[:report_snapshot_id], ticker_symbol: attr[:symbol])
   end
 
   def hash_values_to_string(hash)
