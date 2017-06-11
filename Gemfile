@@ -5,6 +5,8 @@ gem 'rails',          '~> 5.1'
 gem 'pg',             '~> 0.20'
 gem 'puma',           '~> 3.7'
 
+gem 'dotenv-rails',   '~> 2.2', groups: [:development, :test] # Needs to be here so gems that use it will have access
+
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'coffee-rails',   '~> 4.2'
 gem 'haml',           '~> 5.0.1'
@@ -16,8 +18,8 @@ gem 'sprockets-es6',  '~> 0.9.2'
 gem 'turbolinks',     '~> 5'
 gem 'uglifier',       '>= 1.3.0'
 
+
 # Utility and design pattern enhancing gems
-# gem 'figaro',         '~> 1.1.1'  # Don't need this quite yet
 gem 'verbalize',      '~> 2.0'
 
 # Other useful utilities

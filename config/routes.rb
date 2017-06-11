@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   get 'scans/:report' => 'scans#report'
 
+  namespace :api do
+    namespace :v1 do
+      resources :report_snapshots, only: [:create]
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
