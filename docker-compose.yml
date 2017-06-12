@@ -9,6 +9,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - API_KEY=${API_KEY}
     extra_hosts:
       - dbhost:${LOCAL_IP:-127.0.0.1}
     ports:
