@@ -7,16 +7,17 @@ module Reports
       :ticker_symbol,
       :last_trade,
       :change_percent,
+      :float,
+      :float_percent_traded,
+      :short_days_to_cover,
+      :short_percent_of_float,
+      :snapshot_time,
+      :institutional_ownership_percent,
       :volume,
       :volume_average,
       :volume_ratio,
-      :short_days_to_cover,
-      :short_percent_of_float,
-      :float,
-      :float_percent_traded,
-      :institutional_ownership_percent,
-      :volume_average_premarket,
-      :volume_ratio_premarket,
+      # :volume_average_premarket, # for the premarket report just using volume_average
+      # :volume_ratio_premarket,   # for the premarket report just using volume_ratio
     ]
 
     input :input
@@ -42,7 +43,7 @@ module Reports
         built_at: Time.parse(input[:built_at]),
         short_interest_as_of: input[:short_interest_as_of].present? ? Time.parse(input[:short_interest_as_of]) : nil,
         institutional_ownership_as_of: input[:institutional_ownership_as_of].present? ? Time.parse(input[:institutional_ownership_as_of]) : nil,
-        report_date: Time.parse(input[:built_at]),
+        report_date: input[:report_date] || Time.parse(input[:built_at]).to_date,
       }
     end
 

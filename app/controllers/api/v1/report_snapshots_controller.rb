@@ -15,6 +15,7 @@ class API::V1::ReportSnapshotsController < ActionController::API
       :report_type,
       :institutional_ownership_as_of,
       :short_interest_as_of,
+      :report_date,
       :line_items=>Reports::InsertReportData::REPORT_LINE_ITEM_COLUMNS
     ).to_h
   end
