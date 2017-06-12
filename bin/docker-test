@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# https://stackoverflow.com/questions/5302440/testing-for-command-line-args-in-bash
+if [[ $@ == **nobuild** ]]
+  then
+    docker-compose run -e DATABASE_URL=postgres://postgres:postgres@dbhost:5432/momo_scans_test web rspec spec
+  else
+    docker-compose build && docker-compose run -e DATABASE_URL=postgres://postgres:postgres@dbhost:5432/momo_scans_test web rspec spec
+fi

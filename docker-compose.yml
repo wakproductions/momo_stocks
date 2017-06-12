@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    container_name: momo_scans
+    build: .
+    command: bundle exec rails s -p 3000
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - DATABASE_URL=${DATABASE_URL}
+      - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+    extra_hosts:
+      - dbhost:${LOCAL_IP:-127.0.0.1}
+    ports:
+      - ${HTTP_PORT:-80}:3000
+    tty: true
+    volumes:
+      - ./log:/app/log
+      - ./public/assets:/app/public/assets
