@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612172301) do
+ActiveRecord::Schema.define(version: 20170613125828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20170612172301) do
     t.float "volume_average_premarket"
     t.float "volume_ratio_premarket"
     t.datetime "snapshot_time"
+    t.float "gap_percent"
+    t.float "percent_above_52_week_high"
     t.index ["report_snapshot_id", "ticker_symbol"], name: "report_line_items_unique", unique: true
   end
 

@@ -9,6 +9,8 @@ module Reports
       :change_percent,
       :float,
       :float_percent_traded,
+      :gap_percent,
+      :percent_above_52_week_high,
       :short_days_to_cover,
       :short_percent_of_float,
       :snapshot_time,
