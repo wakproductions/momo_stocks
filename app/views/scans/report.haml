@@ -1,9 +1,0 @@
-- if @errors
-  - @errors.each do |error_message|
-    .alert.alert-danger= error_message
-  
-
-%h1= @report_heading
-
--@report.each do |section|
-  = render partial: "report_section_#{@report_name}", locals: { section_title: section.title, line_items: section.line_items}

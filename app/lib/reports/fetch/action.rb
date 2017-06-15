@@ -1,6 +1,6 @@
 module Reports
   module Fetch
-    class Action
+    class Premarket
       include Verbalize::Action
 
       attr_reader :report_snapshot

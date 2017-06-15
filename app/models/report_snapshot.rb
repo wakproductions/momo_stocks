@@ -2,11 +2,11 @@ class ReportSnapshot < ActiveRecord::Base
   has_many :report_line_items
 
   enum report_type: {
-    report_type_premarket:      1,
-    report_type_gaps:           2,
-    report_type_active:         3,
-    report_type_52_week_highs:  4,
-    report_type_after_hours:    5,
+    report_type_premarket:            1,
+    report_type_gaps:                 2,
+    report_type_active:               3,
+    report_type_fifty_two_week_high:  4,
+    report_type_after_hours:          5,
   }
 
   validates :built_at, presence: true

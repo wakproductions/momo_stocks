@@ -1,4 +1,4 @@
-module ScansHelper
+module ReportsHelper
   RJUST_FIELDS=[
     :change_percent,
     :pct_above_52,
@@ -78,7 +78,7 @@ module ScansHelper
         end
       when :float
         # Format how it is displayed into millions from thousands of shares
-        report[:float] = '%.0f' % (report[:float] / 1000).truncate(2) if report[:float].present?
+        report[:float] = '%.0f' % (report[:float].to_f / 1000).truncate(2) if report[:float].present?
 
         if (report[:float].to_f < 15 && (report[:float].to_f) > 0)
           css_class << 'gold-bg '

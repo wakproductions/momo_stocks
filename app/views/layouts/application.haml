@@ -14,17 +14,10 @@
     %nav.navbar.navbar-default{ role: "navigation" }
       .container
         %ul.nav.navbar-nav
-          %li.active= link_to "Premarket", 'http://www.investorsunderground.com/'
-          %li Gaps
-          %li 52wk
-          %li Actives
-          %li After Hours
-
-          -#%li.active= link_to "Pre", reports_premarket_path
-          -#%li.active= link_to "Gaps", reports_gaps_path
-          -#%li.active= link_to "52wk", reports_week52_highs_path
-          -#%li.active= link_to "Active", reports_active_stocks_path
-          -#%li.active= link_to "After", reports_afterhours_path
-          -#%li.active= link_to "IPO", reports_ipo_list_path
+          %li.active= link_to "Premarket", reports_premarket_path
+          %li.active= link_to "Gaps", reports_gaps_path
+          %li.active= link_to "Actives", reports_active_path
+          %li.active= link_to "52wk", reports_fifty_two_week_high_path
+          %li.active= link_to "After Hours", reports_after_hours_path
     .container
       = yield

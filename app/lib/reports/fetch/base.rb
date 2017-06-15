@@ -1,11 +1,12 @@
 module Reports
   module Fetch
-    class Action
+    class Base
       include Verbalize::Action
 
       attr_reader :report_snapshot
 
-      input :report_snapshot # can be a date or report snapshot id number
+      input :report_type,
+            :report_snapshot # can be a date or report snapshot id number
 
       def call
         report_snapshot_attributes.merge(report_line_items: report_line_items)
@@ -29,7 +30,7 @@ module Reports
         else
           @report_snapshot_ar ||= ReportSnapshot
             .joins(:report_line_items)
-            .where(report_type: 'report_type_premarket')
+            .where(report_type: "report_type_#{report_type}")
             .order(id: :desc)
             .first
         end
