@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get 'scans/:report' => 'scans#report'
+  get 'reports/premarket' => 'reports#premarket'
 
   namespace :api do
     namespace :v1 do
