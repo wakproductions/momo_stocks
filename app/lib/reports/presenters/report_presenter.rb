@@ -48,7 +48,6 @@ module Reports
           }.slice(*(fields_filter + [:snapshot_time, :updated_at, :gray_symbol]))
         end
 
-        # new_report.sort! { |a,b| sort_direction==:desc ? b[sort_field].to_f<=>a[sort_field].to_f : a[sort_field].to_f<=>b[sort_field].to_f }
         new_report
       end
 

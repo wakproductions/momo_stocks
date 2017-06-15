@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
+  root 'home#index'
+
   get 'reports/active' => 'reports#active'
   get 'reports/after_hours' => 'reports#after_hours'
   get 'reports/fifty_two_week_high' => 'reports#fifty_two_week_high'

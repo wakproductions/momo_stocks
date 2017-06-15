@@ -1,7 +1,7 @@
 module ReportsHelper
   RJUST_FIELDS=[
     :change_percent,
-    :pct_above_52,
+    :percent_above_52_week_high,
     :float,
     :float_percent_traded,
     :gap_percent,
