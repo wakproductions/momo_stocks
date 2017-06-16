@@ -12,27 +12,8 @@
     -@report[:sections].each do |section|
       -if section[:title].present?
         %h2= section[:title]
-        :javascript
-          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <!-- article-top -->
-          <ins class="adsbygoogle"
-            style="display:inline-block;width:728px;height:90px"
-            data-ad-client="ca-pub-9623179230776920"
-            data-ad-slot="7383597095"></ins>
-          <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
+        =render '/ad_header'
       =render partial: 'report_table', locals: { report: section[:line_items], fields: @fields}
 
   .col-md-3
-    :javascript
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- Sidebar ad -->
-      <ins class="adsbygoogle"
-        style="display:inline-block;width:300px;height:600px"
-        data-ad-client="ca-pub-9623179230776920"
-        data-ad-slot="2953397495"></ins>
-      <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-
+    =render '/ad_sidebar'
