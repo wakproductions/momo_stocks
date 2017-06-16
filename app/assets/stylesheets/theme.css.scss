@@ -32,6 +32,16 @@ button, input, optgroup, select, textarea {
     border: 0px;
     border-bottom: 1px solid $table-border-color;
   }
+
+  .table-bordered > thead > tr > th.divider-left,
+  .table-bordered > tbody > tr > td.divider-left {
+    border-left: 2px solid #AAAAAA;
+  }
+  .table-bordered > thead > tr > th.divider-right,
+  .table-bordered > tbody > tr > td.divider-right {
+    border-right: 2px solid #AAAAAA;
+  }
+
 }
 
 .align-right { text-align: right; }
