@@ -1,1 +1,0 @@
-ReportPresenter=Reports::Presenters::ReportPresenter

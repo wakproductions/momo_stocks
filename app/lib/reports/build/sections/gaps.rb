@@ -13,12 +13,12 @@ module Reports
 
           @sections << {
             title: 'Bullish Gaps',
-            line_items: ReportPresenter.format(@report.select { |r| r[:gap_percent] >= 0.0 })
+            line_items: ReportLineItemsPresenter.format(@report.select { |r| r[:gap_percent] >= 0.0 })
           }
 
           @sections << {
             title: 'Bearish Gaps',
-            line_items: ReportPresenter.format(@report.select { |r| r[:gap_percent] < 0.0 })
+            line_items: ReportLineItemsPresenter.format(@report.select { |r| r[:gap_percent] < 0.0 })
           }
 
           sections

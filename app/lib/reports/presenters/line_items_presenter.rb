@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Reports
   module Presenters
-    class ReportPresenter
+    class LineItemsPresenter
 
       DEFAULT_FIELDS=[
         :ticker_symbol,

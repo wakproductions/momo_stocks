@@ -17,7 +17,7 @@ module ReportsHelper
 
   def report_date_form(page)
     s = form_tag "/reports/#{page}", method: :get, authenticity_token: false do
-      b = text_field_tag :report_date, @report_date.strftime('%m/%d/%Y')
+      b = text_field_tag :report_date, @report[:report_date]
       b << submit_tag("Go")
       b
     end

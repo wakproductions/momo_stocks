@@ -9,7 +9,13 @@ module Reports
             :report_snapshot # can be a date or report snapshot id number
 
       def call
-        report_snapshot_attributes.merge(report_line_items: report_line_items)
+        if report_snapshot_ar.present?
+          report_snapshot_attributes.merge(report_line_items: report_line_items)
+        else
+          {
+
+          }
+        end
       end
 
       private
@@ -26,7 +32,11 @@ module Reports
         if report_snapshot.is_a? Integer
           # find the appropriate report snapshot by ID
         elsif report_snapshot.is_a? Date
-          # grab the most recent on that date
+          @report_snapshot_ar ||= ReportSnapshot
+            .joins(:report_line_items)
+            .where(report_type: "report_type_#{report_type}", report_date: report_snapshot)
+            .order(id: :desc)
+            .first
         else
           @report_snapshot_ar ||= ReportSnapshot
             .joins(:report_line_items)

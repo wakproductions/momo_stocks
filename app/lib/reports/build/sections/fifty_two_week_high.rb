@@ -13,7 +13,7 @@ module Reports
 
           @sections << {
             title: nil,
-            line_items: ReportPresenter.format(@report)
+            line_items: ReportLineItemsPresenter.format(@report)
           }
 
           sections

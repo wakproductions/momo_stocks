@@ -6,14 +6,21 @@
       %div Last Updated: #{@report[:last_updated]}
       %div Items: #{@report[:item_count]}
 
-    -#.report_date_form
-    -#  =report_date_form @report[:route]
+    .report_date_form
+      =report_date_form @report[:route]
 
-    -@report[:sections].each do |section|
-      -if section[:title].present?
-        %h2= section[:title]
-        =render '/ad_header'
-      =render partial: 'report_table', locals: { report: section[:line_items], fields: @fields}
+    -if @report[:sections].present?
+      -@report[:sections].each do |section|
+        -if section[:title].present?
+          %h2= section[:title]
+        -if section[:line_items].size > 0
+          =render '/ad_header'
+          =render partial: 'report_table', locals: { report: section[:line_items], fields: @fields }
+        -else
+          %h3 No Stocks Found for this Scan
+          =render '/ad_header'
+    -else
+      %h2 No Stock Scan Available for the Given Date
 
   .col-md-3
     =render '/ad_sidebar'
