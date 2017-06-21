@@ -7,6 +7,20 @@ button, input, optgroup, select, textarea {
   color: #000000;
 }
 
+.navbar-default .navbar-header {
+  margin-right: 20px;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  font-weight: bold;
+}
+
+.navbar-default .navbar-nav > .active > a:hover {
+  font-weight: bold;
+  background-color: #d5a527;
+}
+
+
 .report-container {
   // set up the center alignment of the table
   width: 90%;
@@ -20,6 +34,7 @@ button, input, optgroup, select, textarea {
       padding: 2px;
 
     }
+    tr:hover td { background:#666666 }
   }
 
 
