@@ -6,9 +6,11 @@
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
     :javascript
-      $(function() {
-          $( "#report_date" ).datepicker();
-        });
+      ready = function() {
+        $(function() {
+            $( "#report_date" ).datepicker();
+          });
+      }
 
     = render partial: '/google_analytics'
 
@@ -25,3 +27,9 @@
           %li.active= link_to "After Hours", reports_after_hours_path
     .container
       = yield
+
+    :javascript
+      // To make Turbolinks with with JQuery.
+      // See https://stackoverflow.com/questions/17317816/rails-javascript-only-works-after-reload
+      $(document).ready(ready)
+      $(document).on('page:load', ready)
