@@ -1,3 +1,8 @@
+## Copyright Warning
+
+This repository is copyright © 2017 by Winston Kotzan. All rights reserved. _It is available on Github for informational
+purposes only. Do not copy or reuse any of this code without the written consent of Winston Kotzan._ 
+
 ## Installing Nokogiri
 
 There's an incompatibility with the xz lib installed by homebrew/imagemagick and the call Nokogiri makes to xz when
