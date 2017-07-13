@@ -22,6 +22,9 @@ gem 'uglifier',       '>= 1.3.0'
 # Utility and design pattern enhancing gems
 gem 'verbalize',      '~> 2.0'
 
+# Front-end related gems
+gem 'font-awesome-rails', '~> 4.7'
+
 # Other useful utilities
 # gem 'colorize',       '~> 0.8.1' # Not using yet
 

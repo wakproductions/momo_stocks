@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   root 'home#index'
+  get 'about' => 'home#about'
 
   get 'reports/active' => 'reports#active'
   get 'reports/after_hours' => 'reports#after_hours'
